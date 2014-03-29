@@ -7,4 +7,5 @@
     void          (*func)();
   }               t_identifier;
   void init_identifiers(t_identifier *);
+  void add_to_buffer(char, char *);
 #endif
