@@ -10,7 +10,8 @@ NAME = libmy.a
 SRC  = src/my_putchar.c\
 	src/my_putstr.c\
 	src/my_strlen.c\
-	src/my_putnbr.c
+	src/my_putnbr.c\
+	src/my_printf.c
 OBJ  = $(SRC:%.c=%.o)
 
 # Archiving and indexing
