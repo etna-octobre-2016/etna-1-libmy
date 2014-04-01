@@ -9,4 +9,5 @@
   void            init_identifiers(t_identifier *);
   void            add_to_buffer(char, char *);
   int             identifier_match(char, t_identifier *, t_identifier *);
+  char            *init_buffer();
 #endif

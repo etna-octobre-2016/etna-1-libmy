@@ -11,36 +11,38 @@ void            my_printf(char *format, ...)
   t_identifier  *identifier_ptr;
   t_identifier  ids[IDENTIFIERS_COUNT];
 
-  buffer = malloc(sizeof(char));
-  buffer[0] = '\0';
-  identifier_found = 0;
-  identifier_ptr = &identifier;
-  init_identifiers(ids);
-  for (i = 0; format[i] != '\0'; i++)
+  buffer = init_buffer();
+  if (buffer != NULL)
   {
-    if (format[i] == '%')
+    identifier_found = 0;
+    identifier_ptr = &identifier;
+    init_identifiers(ids);
+    for (i = 0; format[i] != '\0'; i++)
     {
-      identifier_found = 1;
-    }
-    else if (identifier_found)
-    {
-      if (identifier_match(format[i], identifier_ptr, ids))
+      if (format[i] == '%')
       {
-        my_putstr("et apres l'appel de identifier_match : ");
-        my_putchar(identifier.id);
-        my_putchar('\n');
+        identifier_found = 1;
+      }
+      else if (identifier_found)
+      {
+        if (identifier_match(format[i], identifier_ptr, ids))
+        {
+          my_putstr("et apres l'appel de identifier_match : ");
+          my_putchar(identifier.id);
+          my_putchar('\n');
+        }
+        else
+        {
+          my_putstr("Error: Unknown identifier\n");
+        }
       }
       else
       {
-        my_putstr("Error: Unknown identifier\n");
+        add_to_buffer(format[i], buffer);
       }
     }
-    else
-    {
-      add_to_buffer(format[i], buffer);
-    }
+    free(buffer);
   }
-  free(buffer);
 }
 
 void            init_identifiers(t_identifier *ids)
@@ -76,4 +78,15 @@ int             identifier_match(char id, t_identifier *identifier, t_identifier
     }
   }
   return (0);
+}
+
+char            *init_buffer()
+{
+  char          *buffer;
+
+  buffer = malloc(sizeof(char));
+  if (buffer != NULL)
+    buffer[0] = '\0';
+
+  return (buffer);
 }
