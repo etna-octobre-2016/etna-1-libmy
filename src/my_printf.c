@@ -59,6 +59,12 @@ void            add_to_buffer(char c, char *buffer)
 
   len = my_strlen(buffer);
   buffer = realloc(buffer, sizeof(char));
+  if (buffer == NULL)
+  {
+    perror("Error: ");
+    free(buffer);
+    exit(1);
+  }
   buffer[len] = c;
   buffer[(len + 1)] = '\0';
 }
