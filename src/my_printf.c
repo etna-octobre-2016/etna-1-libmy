@@ -1,6 +1,7 @@
 #include "headers/my.h"
 #include "headers/my_printf.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void            my_printf(char *format, ...)
 {
@@ -12,38 +13,35 @@ void            my_printf(char *format, ...)
   t_identifier  ids[IDENTIFIERS_COUNT];
 
   buffer = init_buffer(NULL);
-  if (buffer != NULL)
+  identifier_found = 0;
+  identifier_ptr = &identifier;
+  init_identifiers(ids);
+  for (i = 0; format[i] != '\0'; i++)
   {
-    identifier_found = 0;
-    identifier_ptr = &identifier;
-    init_identifiers(ids);
-    for (i = 0; format[i] != '\0'; i++)
+    if (format[i] == '%')
     {
-      if (format[i] == '%')
+      identifier_found = 1;
+    }
+    else if (identifier_found)
+    {
+      if (identifier_match(format[i], identifier_ptr, ids))
       {
-        identifier_found = 1;
-      }
-      else if (identifier_found)
-      {
-        if (identifier_match(format[i], identifier_ptr, ids))
-        {
-          my_putstr(buffer);
-          my_putchar('\n');
-          buffer = init_buffer(buffer);
-          identifier_found = 0;
-        }
-        else
-        {
-          my_putstr("Error: Unknown identifier\n");
-        }
+        my_putstr(buffer);
+        my_putchar('\n');
+        buffer = init_buffer(buffer);
+        identifier_found = 0;
       }
       else
       {
-        add_to_buffer(format[i], buffer);
+        my_putstr("Error: Unknown identifier\n");
       }
     }
-    free(buffer);
+    else
+    {
+      add_to_buffer(format[i], buffer);
+    }
   }
+  free(buffer);
 }
 
 void            init_identifiers(t_identifier *ids)
@@ -95,8 +93,11 @@ char            *init_buffer(char *old_buffer)
     free(old_buffer);
 
   buffer = malloc(sizeof(char));
-  if (buffer != NULL)
-    buffer[0] = '\0';
-
+  if (buffer == NULL)
+  {
+    perror("Error: ");
+    exit(1);
+  }
+  buffer[0] = '\0';
   return (buffer);
 }
