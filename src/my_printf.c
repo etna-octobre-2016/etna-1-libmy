@@ -1,7 +1,5 @@
 #include "headers/my.h"
 #include "headers/my_printf.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 void            my_printf(char *format, ...)
 {
