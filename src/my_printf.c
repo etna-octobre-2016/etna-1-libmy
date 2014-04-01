@@ -11,7 +11,7 @@ void            my_printf(char *format, ...)
   t_identifier  *identifier_ptr;
   t_identifier  ids[IDENTIFIERS_COUNT];
 
-  buffer = init_buffer();
+  buffer = init_buffer(NULL);
   if (buffer != NULL)
   {
     identifier_found = 0;
@@ -27,9 +27,10 @@ void            my_printf(char *format, ...)
       {
         if (identifier_match(format[i], identifier_ptr, ids))
         {
-          my_putstr("et apres l'appel de identifier_match : ");
-          my_putchar(identifier.id);
+          my_putstr(buffer);
           my_putchar('\n');
+          buffer = init_buffer(buffer);
+          identifier_found = 0;
         }
         else
         {
@@ -86,9 +87,12 @@ int             identifier_match(char id, t_identifier *identifier, t_identifier
   return (0);
 }
 
-char            *init_buffer()
+char            *init_buffer(char *old_buffer)
 {
   char          *buffer;
+
+  if (old_buffer != NULL)
+    free(old_buffer);
 
   buffer = malloc(sizeof(char));
   if (buffer != NULL)
