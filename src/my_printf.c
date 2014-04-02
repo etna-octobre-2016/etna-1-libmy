@@ -3,14 +3,15 @@
 
 int             my_printf(char *format, ...)
 {
-  t_identifier  identifier;
-  t_identifier  *identifier_ptr;
-  t_identifier  ids[IDENTIFIERS_COUNT];
   char          *buffer;
   int           i;
   int           identifier_found;
   int           ids_count;
   int           output_length;
+  t_identifier  identifier;
+  t_identifier  *identifier_ptr;
+  t_identifier  ids[IDENTIFIERS_COUNT];
+  va_list       params;
 
   init_identifiers(ids);
   ids_count = count_identifiers(format, ids);
@@ -20,6 +21,7 @@ int             my_printf(char *format, ...)
     buffer = init_buffer(NULL);
     identifier_found = 0;
     identifier_ptr = &identifier;
+    va_start(params, format);
     for (i = 0; format[i] != '\0'; i++)
     {
       if (format[i] == '%')
@@ -32,7 +34,7 @@ int             my_printf(char *format, ...)
         {
           output_length += my_strlen(buffer);
           my_putstr(buffer);
-
+          identifier_ptr->func(va_arg(params, void *));
           buffer = init_buffer(buffer);
           identifier_found = 0;
         }
@@ -42,6 +44,7 @@ int             my_printf(char *format, ...)
         add_to_buffer(format[i], buffer);
       }
     }
+    va_end(params);
     free(buffer);
   }
   return (output_length);
