@@ -3,16 +3,46 @@
 
 int             my_printf(char *format, ...)
 {
+  t_identifier  identifier;
+  t_identifier  *identifier_ptr;
   t_identifier  ids[IDENTIFIERS_COUNT];
+  char          *buffer;
+  int           i;
+  int           identifier_found;
   int           ids_count;
   int           output_length;
 
   init_identifiers(ids);
   ids_count = count_identifiers(format, ids);
-  output_length = 0; /* no increment for \0 character */
+  output_length = 0; /* do not increment for \0 character */
   if (ids_count > -1)
   {
+    buffer = init_buffer(NULL);
+    identifier_found = 0;
+    identifier_ptr = &identifier;
+    for (i = 0; format[i] != '\0'; i++)
+    {
+      if (format[i] == '%')
+      {
+        identifier_found = 1;
+      }
+      else if (identifier_found)
+      {
+        if (identifier_match(format[i], ids, identifier_ptr))
+        {
+          output_length += my_strlen(buffer);
+          my_putstr(buffer);
 
+          buffer = init_buffer(buffer);
+          identifier_found = 0;
+        }
+      }
+      else
+      {
+        add_to_buffer(format[i], buffer);
+      }
+    }
+    free(buffer);
   }
   return (output_length);
 }
