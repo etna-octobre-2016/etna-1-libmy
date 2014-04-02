@@ -9,6 +9,6 @@
   void            init_identifiers(t_identifier *);
   void            add_to_buffer(char, char *);
   int             identifier_match(char, t_identifier *, t_identifier *);
-  int             identifiers_valid(char *, t_identifier *);
+  int             count_identifiers(char *, t_identifier *);
   char            *init_buffer(char *);
 #endif

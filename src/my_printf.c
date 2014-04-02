@@ -4,9 +4,11 @@
 void            my_printf(char *format, ...)
 {
   t_identifier  ids[IDENTIFIERS_COUNT];
+  int           ids_count;
 
   init_identifiers(ids);
-  if (identifiers_valid(format, ids))
+  ids_count = count_identifiers(format, ids);
+  if (ids_count > -1)
   {
     my_putstr("identifers are valid\n");
   }
@@ -46,7 +48,6 @@ int             identifier_match(char id, t_identifier *ids, t_identifier *ident
     {
       if (identifier != NULL)
       {
-        printf("lorsque je trouve l'item, id = %c et que je passe un pointeur\n", ids[i].id);
         identifier->id = ids[i].id;
         identifier->func = ids[i].func;
       }
@@ -56,50 +57,51 @@ int             identifier_match(char id, t_identifier *ids, t_identifier *ident
   return (0);
 }
 
-int             identifiers_valid(char *format, t_identifier *ids)
+int             count_identifiers(char *format, t_identifier *ids)
 {
   int           format_length;
   int           i;
-  int           identifier_found;
-  int           valid;
+  int           id_found;
+  int           ids_count;
 
   format_length = my_strlen(format);
-  valid = 1;
-  for (i = 0; format[i] != '\0' && valid == 1; i++)
+  ids_count = 0;
+  for (i = 0; format[i] != '\0' && ids_count > -1; i++)
   {
     if (format[i] == '%')
     {
       if (i == (format_length - 1)) /* When % is the last char */
       {
         my_putstr("my_printf: Error: Undefined identifier in format string\n");
-        valid = 0;
+        ids_count = -1;
       }
       else
       {
-        identifier_found = 1;
+        id_found = 1;
       }
     }
-    else if (identifier_found)
+    else if (id_found)
     {
       if (format[i] == ' ')
       {
         my_putstr("my_printf: Error: Undefined identifier in format string\n");
-        valid = 0;
+        ids_count = -1;
       }
       else if (identifier_match(format[i], ids, NULL) == 0)
       {
         my_putstr("my_printf: Error: Unknown identifier %");
         my_putchar(format[i]);
         my_putstr(" in format string\n");
-        valid = 0;
+        ids_count = -1;
       }
       else
       {
-        identifier_found = 0;
+        id_found = 0;
+        ids_count++;
       }
     }
   }
-  return (valid);
+  return (ids_count);
 }
 
 char            *init_buffer(char *old_buffer)
