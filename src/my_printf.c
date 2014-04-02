@@ -1,17 +1,20 @@
 #include "headers/my.h"
 #include "headers/my_printf.h"
 
-void            my_printf(char *format, ...)
+int             my_printf(char *format, ...)
 {
   t_identifier  ids[IDENTIFIERS_COUNT];
   int           ids_count;
+  int           output_length;
 
   init_identifiers(ids);
   ids_count = count_identifiers(format, ids);
+  output_length = 0; /* no increment for \0 character */
   if (ids_count > -1)
   {
-    my_putstr("identifers are valid\n");
+
   }
+  return (output_length);
 }
 
 void            init_identifiers(t_identifier *ids)
