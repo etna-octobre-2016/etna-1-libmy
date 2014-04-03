@@ -8,6 +8,7 @@ int             my_printf(char *format, ...)
   int           identifier_found;
   int           ids_count;
   int           output_length;
+  void          *params_item;
   t_identifier  identifier;
   t_identifier  *identifier_ptr;
   t_identifier  ids[IDENTIFIERS_COUNT];
@@ -34,7 +35,20 @@ int             my_printf(char *format, ...)
         {
           output_length += my_strlen(buffer);
           my_putstr(buffer);
-          identifier_ptr->func(va_arg(params, void *));
+          switch (identifier_ptr->id)
+          {
+            case 'c':
+              identifier_ptr->func(va_arg(params, int));
+              output_length++;
+              break;
+            case 's':
+              params_item = va_arg(params, char *);
+              output_length += my_strlen(params_item);
+              identifier_ptr->func(params_item);
+              break;
+            default:
+              break;
+          }
           buffer = init_buffer(buffer);
           identifier_found = 0;
         }
