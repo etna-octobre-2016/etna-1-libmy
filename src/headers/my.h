@@ -3,7 +3,7 @@
   #include  <stdlib.h>
   #include  <unistd.h>
 
-  void      my_putchar(char);
+  int       my_putchar(char);
   void      my_putstr(char *);
   int       my_putnbr(int);
   int       my_strlen(char *);
