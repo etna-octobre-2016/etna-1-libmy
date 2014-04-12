@@ -42,6 +42,9 @@ int             my_printf(char *format, ...)
             case 's':
               output_length += identifier_ptr->func(va_arg(params, char *));
               break;
+            case 'd':
+              output_length += identifier_ptr->func(va_arg(params, int *));
+              break;
             default:
               break;
           }
@@ -66,6 +69,8 @@ void            init_identifiers(t_identifier *ids)
   ids[0].func = &my_putchar;
   ids[1].id   = 's';
   ids[1].func = &my_putstr;
+  ids[2].id   = 'd';
+  ids[2].func = &my_putnbr;
 }
 
 void            add_to_buffer(char c, char *buffer)

@@ -1,6 +1,6 @@
 #ifndef MY_PRINTF
   #define         MY_PRINTF
-  #define         IDENTIFIERS_COUNT 2
+  #define         IDENTIFIERS_COUNT 3
   typedef struct  s_identifier
   {
     char          id;
