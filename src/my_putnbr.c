@@ -1,6 +1,6 @@
-#include  "headers/my.h"
+#include        "headers/my.h"
 
-int       my_putnbr(int nb)
+int             my_putnbr(int nb)
 {
   int           i;
   int           figure;
@@ -8,6 +8,11 @@ int       my_putnbr(int nb)
   char          current_char;
   static char   zero_char = '0';
 
+  if (nb == INT_MIN)
+  {
+    my_putstr("my_putnbr: error: integer overflow\n");
+    return (-1);
+  }
   current_char = '0';
   output_length = 0;
   for (i = 0; i < 10; ++i)
