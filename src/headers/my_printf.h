@@ -4,7 +4,7 @@
   typedef struct  s_identifier
   {
     char          id;
-    void          (*func)();
+    int           (*func)();
   }               t_identifier;
   void            init_identifiers(t_identifier *);
   void            add_to_buffer(char, char *);

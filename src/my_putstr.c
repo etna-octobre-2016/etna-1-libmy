@@ -1,6 +1,6 @@
 #include  "headers/my.h"
 
-void      my_putstr(char *str)
+int       my_putstr(char *str)
 {
   int     i;
 
@@ -8,4 +8,5 @@ void      my_putstr(char *str)
     my_putchar(str[i]);
 
   my_putchar('\0');
+  return (i);
 }

@@ -8,7 +8,6 @@ int             my_printf(char *format, ...)
   int           identifier_found;
   int           ids_count;
   int           output_length;
-  void          *params_item;
   t_identifier  identifier;
   t_identifier  *identifier_ptr;
   t_identifier  ids[IDENTIFIERS_COUNT];
@@ -38,13 +37,10 @@ int             my_printf(char *format, ...)
           switch (identifier_ptr->id)
           {
             case 'c':
-              identifier_ptr->func(va_arg(params, int));
-              output_length++;
+              output_length += identifier_ptr->func(va_arg(params, int));
               break;
             case 's':
-              params_item = va_arg(params, char *);
-              output_length += my_strlen(params_item);
-              identifier_ptr->func(params_item);
+              output_length += identifier_ptr->func(va_arg(params, char *));
               break;
             default:
               break;
