@@ -7,8 +7,8 @@
   #include  <unistd.h>
 
   int       my_printf(char *, ...);
+  int       my_putchar(int);
+  int       my_putstr(char *);
+  int       my_putnbr(int);
   int       my_strlen(char *);
-  void      my_putchar(int);
-  void      my_putnbr(int);
-  void      my_putstr(char *);
 #endif

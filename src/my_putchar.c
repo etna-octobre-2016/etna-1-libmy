@@ -1,6 +1,7 @@
 #include  "headers/my.h"
 
-void      my_putchar(int c)
+int       my_putchar(int c)
 {
   write(1, &c, 1);
+  return (1);
 }
