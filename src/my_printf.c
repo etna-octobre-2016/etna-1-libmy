@@ -34,20 +34,13 @@ int             my_printf(char *format, ...)
         {
           output_length += my_strlen(buffer);
           my_putstr(buffer);
-          switch (identifier_ptr->id)
-          {
-            case 'c':
-              output_length += identifier_ptr->func(va_arg(params, int));
-              break;
-            case 's':
-              output_length += identifier_ptr->func(va_arg(params, char *));
-              break;
-            case 'd':
-              output_length += identifier_ptr->func(va_arg(params, int *));
-              break;
-            default:
-              break;
-          }
+          if (identifier_ptr->id == 'c')
+            output_length += identifier_ptr->func(va_arg(params, int));
+          else if (identifier_ptr->id == 's')
+            output_length += identifier_ptr->func(va_arg(params, char *));
+          else if (identifier_ptr->id == 'd' || identifier_ptr->id == 'i')
+            output_length += identifier_ptr->func(va_arg(params, int *));
+
           buffer = init_buffer(buffer);
           identifier_found = 0;
         }
@@ -71,6 +64,8 @@ void            init_identifiers(t_identifier *ids)
   ids[1].func = &my_putstr;
   ids[2].id   = 'd';
   ids[2].func = &my_putnbr;
+  ids[3].id   = 'i';
+  ids[3].func = &my_putnbr;
 }
 
 void            add_to_buffer(char c, char *buffer)
