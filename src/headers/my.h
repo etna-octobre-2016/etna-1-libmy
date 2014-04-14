@@ -11,4 +11,5 @@
   int       my_putstr(char *);
   int       my_putnbr(int);
   int       my_strlen(char *);
+  int       my_convert_to_base(int, int);
 #endif
