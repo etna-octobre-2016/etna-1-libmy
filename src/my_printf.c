@@ -40,15 +40,15 @@ int             my_printf(char *format, ...)
           else if (identifier_ptr->id == 's')
             output_length += identifier_ptr->func(va_arg(params, char *));
           else if (identifier_ptr->id == 'd' || identifier_ptr->id == 'i')
-            output_length += identifier_ptr->func(va_arg(params, int *), 10, 0);
+            output_length += identifier_ptr->func(va_arg(params, int), 10, 0);
           else if (identifier_ptr->id == 'o')
-            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 8, 0);
+            output_length += identifier_ptr->func(abs(va_arg(params, int)), 8, 0);
           else if (identifier_ptr->id == 'u')
-            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 10, 0);
+            output_length += identifier_ptr->func(abs(va_arg(params, int)), 10, 0);
           else if (identifier_ptr->id == 'x')
-            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 16, 0);
+            output_length += identifier_ptr->func(abs(va_arg(params, int)), 16, 0);
           else if (identifier_ptr->id == 'X')
-            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 16, 1);
+            output_length += identifier_ptr->func(abs(va_arg(params, int)), 16, 1);
 
           buffer = init_buffer(buffer);
           identifier_found = 0;
