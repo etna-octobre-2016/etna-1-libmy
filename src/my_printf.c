@@ -39,7 +39,7 @@ int             my_printf(char *format, ...)
           else if (identifier_ptr->id == 's')
             output_length += identifier_ptr->func(va_arg(params, char *));
           else if (identifier_ptr->id == 'd' || identifier_ptr->id == 'i')
-            output_length += identifier_ptr->func(va_arg(params, int *));
+            output_length += identifier_ptr->func(va_arg(params, int *), 10, 0);
 
           buffer = init_buffer(buffer);
           identifier_found = 0;
@@ -50,6 +50,7 @@ int             my_printf(char *format, ...)
         add_to_buffer(format[i], buffer);
       }
     }
+    my_putstr(buffer);
     va_end(params);
     free(buffer);
   }
