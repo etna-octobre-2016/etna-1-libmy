@@ -34,12 +34,21 @@ int             my_printf(char *format, ...)
         {
           output_length += my_strlen(buffer);
           my_putstr(buffer);
+
           if (identifier_ptr->id == 'c')
             output_length += identifier_ptr->func(va_arg(params, int));
           else if (identifier_ptr->id == 's')
             output_length += identifier_ptr->func(va_arg(params, char *));
           else if (identifier_ptr->id == 'd' || identifier_ptr->id == 'i')
             output_length += identifier_ptr->func(va_arg(params, int *), 10, 0);
+          else if (identifier_ptr->id == 'o')
+            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 8, 0);
+          else if (identifier_ptr->id == 'u')
+            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 10, 0);
+          else if (identifier_ptr->id == 'x')
+            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 16, 0);
+          else if (identifier_ptr->id == 'X')
+            output_length += identifier_ptr->func(abs((int)va_arg(params, int *)), 16, 1);
 
           buffer = init_buffer(buffer);
           identifier_found = 0;
@@ -67,6 +76,14 @@ void            init_identifiers(t_identifier *ids)
   ids[2].func = &my_putnbr;
   ids[3].id   = 'i';
   ids[3].func = &my_putnbr;
+  ids[4].id   = 'o';
+  ids[4].func = &my_putnbr;
+  ids[5].id   = 'u';
+  ids[5].func = &my_putnbr;
+  ids[6].id   = 'x';
+  ids[6].func = &my_putnbr;
+  ids[7].id   = 'X';
+  ids[7].func = &my_putnbr;
 }
 
 void            add_to_buffer(char c, char *buffer)
@@ -112,6 +129,7 @@ int             count_identifiers(char *format, t_identifier *ids)
   int           ids_count;
 
   format_length = my_strlen(format);
+  id_found = 0;
   ids_count = 0;
   for (i = 0; format[i] != '\0' && ids_count > -1; i++)
   {
