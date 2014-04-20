@@ -24,7 +24,7 @@ int             my_printf(char *format, ...)
     va_start(params, format);
     for (i = 0; format[i] != '\0'; i++)
     {
-      if (format[i] == '%')
+      if (identifier_found == 0 && format[i] == '%')
       {
         identifier_found = 1;
       }
@@ -49,6 +49,8 @@ int             my_printf(char *format, ...)
             output_length += identifier_ptr->func(abs(va_arg(params, int)), 16, 0);
           else if (identifier_ptr->id == 'X')
             output_length += identifier_ptr->func(abs(va_arg(params, int)), 16, 1);
+          else if (identifier_ptr->id == '%')
+            output_length += identifier_ptr->func('%');
 
           buffer = init_buffer(buffer);
           identifier_found = 0;
@@ -84,6 +86,8 @@ void            init_identifiers(t_identifier *ids)
   ids[6].func = &my_putnbr;
   ids[7].id   = 'X';
   ids[7].func = &my_putnbr;
+  ids[8].id   = '%';
+  ids[8].func = &my_putchar;
 }
 
 void            add_to_buffer(char c, char *buffer)
@@ -133,7 +137,7 @@ int             count_identifiers(char *format, t_identifier *ids)
   ids_count = 0;
   for (i = 0; format[i] != '\0' && ids_count > -1; i++)
   {
-    if (format[i] == '%')
+    if (id_found == 0 && format[i] == '%')
     {
       if (i == (format_length - 1)) /* When % is the last char */
       {
