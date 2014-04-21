@@ -6,28 +6,17 @@ RM = rm -f
 
 # Library variables
 # -----------------------------------------------
-NAME = libmy.a
+NAME = libmy_printf_`uname -m`-`uname -s`
+OBJ  = $(SRC:%.c=%.o)
 SRC  = src/my_putchar.c\
 	src/my_putstr.c\
 	src/my_strlen.c\
 	src/my_putnbr.c\
 	src/my_printf.c
-OBJ  = $(SRC:%.c=%.o)
-
-# Archiving and indexing
-# -----------------------------------------------
-$(NAME): $(OBJ)
-	$(AR) $(NAME) $(OBJ)
-	ranlib $(NAME)
-
-# Compiling
-# -----------------------------------------------
-$(OBJ):	$(SRC)
-	$(foreach file, $(SRC), $(CC) -c $(file) -o $(file:%.c=%.o);)
 
 # Default rule
 # -----------------------------------------------
-all: $(NAME)
+all: my_printf_static my_printf_dynamic
 
 # Object files removing
 # -----------------------------------------------
@@ -37,8 +26,14 @@ clean:
 # Object files and binary removing
 # -----------------------------------------------
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME).a $(NAME).so
 
-# Recompiling everything
+# Static library compiling
 # -----------------------------------------------
-re: fclean all
+my_printf_static: $(SRC)
+	$(foreach file, $(SRC), $(CC) -c $(file) -o $(file:%.c=%.o);)
+	$(AR) $(NAME).a $(OBJ)
+	ranlib $(NAME).a
+
+my_printf_dynamic: $(SRC)
+	$(CC) -shared -o $(NAME).so $(SRC)
