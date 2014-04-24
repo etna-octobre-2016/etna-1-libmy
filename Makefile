@@ -12,6 +12,7 @@ SRC  = src/my_putchar.c\
 	src/my_putstr.c\
 	src/my_strlen.c\
 	src/my_putnbr_base.c\
+	src/my_putnbr.c\
 #	src/my_printf.c
 
 # Default rule
