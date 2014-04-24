@@ -15,7 +15,7 @@ SRC  = src/my_putchar.c\
 	src/my_putnbr_base_u.c\
 	src/my_putnbr.c\
 	src/my_putnbr_u.c\
-#	src/my_printf.c
+	src/my_printf.c
 
 # Default rule
 # -----------------------------------------------

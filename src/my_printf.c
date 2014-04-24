@@ -40,15 +40,15 @@ int             my_printf(char *format, ...)
           else if (identifier_ptr->id == 's')
             output_length += identifier_ptr->func(va_arg(params, char *));
           else if (identifier_ptr->id == 'd' || identifier_ptr->id == 'i')
-            output_length += identifier_ptr->func(va_arg(params, int), 10, 0);
+            output_length += identifier_ptr->func(va_arg(params, int));
           else if (identifier_ptr->id == 'o')
-            output_length += identifier_ptr->func(abs(va_arg(params, int)), 8, 0);
+            output_length += identifier_ptr->func(va_arg(params, int), "01234567");
           else if (identifier_ptr->id == 'u')
-            output_length += identifier_ptr->func(abs(va_arg(params, int)), 10, 0);
+            output_length += identifier_ptr->func(va_arg(params, int));
           else if (identifier_ptr->id == 'x')
-            output_length += identifier_ptr->func(abs(va_arg(params, int)), 16, 0);
+            output_length += identifier_ptr->func(va_arg(params, int), "0123456789abcdef");
           else if (identifier_ptr->id == 'X')
-            output_length += identifier_ptr->func(abs(va_arg(params, int)), 16, 1);
+            output_length += identifier_ptr->func(va_arg(params, int), "0123456789ABCDEF");
           else if (identifier_ptr->id == '%')
             output_length += identifier_ptr->func('%');
 
@@ -79,13 +79,13 @@ void            init_identifiers(t_identifier *ids)
   ids[3].id   = 'i';
   ids[3].func = &my_putnbr;
   ids[4].id   = 'o';
-  ids[4].func = &my_putnbr;
+  ids[4].func = &my_putnbr_base_u;
   ids[5].id   = 'u';
-  ids[5].func = &my_putnbr;
+  ids[5].func = &my_putnbr_u;
   ids[6].id   = 'x';
-  ids[6].func = &my_putnbr;
+  ids[6].func = &my_putnbr_base_u;
   ids[7].id   = 'X';
-  ids[7].func = &my_putnbr;
+  ids[7].func = &my_putnbr_base_u;
   ids[8].id   = '%';
   ids[8].func = &my_putchar;
 }
