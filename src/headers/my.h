@@ -9,6 +9,6 @@
   int       my_printf(char *, ...);
   int       my_putchar(int);
   int       my_putstr(char *);
-  int       my_putnbr(int, int, int);
+  int       my_putnbr_base(int, char *);
   int       my_strlen(char *);
 #endif
